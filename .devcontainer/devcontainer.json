@@ -1,0 +1,13 @@
+// created with the help of generative ai
+{
+  "name": "Bun 1.3",
+  "image": "oven/bun:1.3-slim",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "oven.bun-vscode"
+      ]
+    }
+  },
+  "remoteUser": "bun"
+}

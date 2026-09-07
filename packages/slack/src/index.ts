@@ -23,18 +23,20 @@ const sessions = new Map<string, { client: any; server: any; sessionId: string; 
 void (async () => {
   const events = await opencode.client.event.subscribe()
   for await (const event of events.stream) {
-    if (event.type === "message.part.updated") {
-      const part = event.properties.part
-      if (part.type === "tool") {
-        // Find the session for this tool update
-        for (const [_sessionKey, session] of sessions.entries()) {
-          if (session.sessionId === part.sessionID) {
-            void handleToolUpdate(part, session.channel, session.thread)
-            break
-          }
-        }
-      }
+    if (event.type != "message.part.updated") {
+      continue;
     }
+    const part = event.properties.part
+    if (part.type != "tool") {
+      continue;
+    }
+    // Find the session for this tool update
+    const correctID = [...sessions.entries()].find(([key, session]) => session.sessionId === part.sessionID)
+      if(!correctID){
+        continue;
+      }
+      const [_,correctSession] = correctID
+       void handleToolUpdate(part, correctSession.channel, correctSession.thread)
   }
 })()
 

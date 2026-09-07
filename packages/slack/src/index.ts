@@ -31,7 +31,7 @@ void (async () => {
       continue;
     }
     // Find the session for this tool update
-    const correctID = [...sessions.entries()].find(([key, session]) => session.sessionId === part.sessionID)
+    const correctID = [...sessions.entries()].find(([_, session]) => session.sessionId === part.sessionID)
       if(!correctID){
         continue;
       }
